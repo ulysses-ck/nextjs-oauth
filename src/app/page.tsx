@@ -1,19 +1,12 @@
-import { cookies } from "next/headers";
+import { auth } from "./actions/auth";
 import { ButtonGoogleAuthorize } from "./components/ButtonGoogleAuthorize";
 
 export  default async function Home() {
-  const cookieStore = await cookies();
-  const access_token = cookieStore.get('access_token')?.value
-  const refresh_token = cookieStore.get('refresh_token')?.value
-
-  const isAuthorized = access_token && refresh_token
-
-
-
+  const {isLoggedIn} = await auth();
   return (
     <div className="w-screen h-screen flex items-center justify-center">
   {
-    isAuthorized ? (
+    isLoggedIn ? (
       <div>
         <h1 className="text-4xl">Autorizado</h1>
         <p>Ya puedes acceder a los documentos de Google</p>
